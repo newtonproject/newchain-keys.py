@@ -37,7 +37,7 @@ deps['dev'] = (
 print(deps)
 
 setup(
-    name='eth-keys',
+    name='newchain-keys',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version='0.2.0-beta.3',
     description="""Common API for NewChain key operations.""",

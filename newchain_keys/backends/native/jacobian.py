@@ -1,6 +1,6 @@
 from typing import Tuple  # noqa: F401
 
-from eth_keys.constants import (
+from newchain_keys.constants import (
     SECPK1_P as P,
     SECPK1_N as N,
     SECPK1_A as A,

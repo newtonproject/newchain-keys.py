@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-from eth_keys import KeyAPI
-from eth_keys.backends import CoinCurveECCBackend
-from eth_keys.backends import NativeECCBackend
+from newchain_keys import KeyAPI
+from newchain_keys.backends import CoinCurveECCBackend
+from newchain_keys.backends import NativeECCBackend
 
 from eth_utils import (
     keccak,

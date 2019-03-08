@@ -21,21 +21,21 @@ from eth_utils import (
     to_normalized_address,
 )
 
-from eth_keys.utils.address import (
+from newchain_keys.utils.address import (
     public_key_bytes_to_address,
 )
-from eth_keys.utils.numeric import (
+from newchain_keys.utils.numeric import (
     int_to_byte,
 )
-from eth_keys.utils.padding import (
+from newchain_keys.utils.padding import (
     pad32,
 )
 
-from eth_keys.exceptions import (
+from newchain_keys.exceptions import (
     BadSignature,
     ValidationError,
 )
-from eth_keys.validation import (
+from newchain_keys.validation import (
     validate_gte,
     validate_integer,
     validate_lt_secpk1n,
@@ -46,7 +46,7 @@ from eth_keys.validation import (
 )
 
 if TYPE_CHECKING:
-    from eth_keys.backends.base import BaseECCBackend  # noqa: F401
+    from newchain_keys.backends.base import BaseECCBackend  # noqa: F401
 
 
 # Must compare against version_info[0] and not version_info.major to please mypy.
@@ -64,7 +64,7 @@ class LazyBackend:
     def __init__(self,
                  backend: 'Union[BaseECCBackend, Type[BaseECCBackend], str, None]' = None,
                  ) -> None:
-        from eth_keys.backends.base import (  # noqa: F811
+        from newchain_keys.backends.base import (  # noqa: F811
             BaseECCBackend,
         )
 
@@ -79,7 +79,7 @@ class LazyBackend:
         else:
             raise ValueError(
                 "Unsupported format for ECC backend.  Must be an instance or "
-                "subclass of `eth_keys.backends.BaseECCBackend` or a string of "
+                "subclass of `newchain_keys.backends.BaseECCBackend` or a string of "
                 "the dot-separated import path for the desired backend class"
             )
 
@@ -100,7 +100,7 @@ class LazyBackend:
 
     @classmethod
     def get_backend(cls, *args: Any, **kwargs: Any) -> 'BaseECCBackend':
-        from eth_keys.backends import get_backend
+        from newchain_keys.backends import get_backend
         return get_backend(*args, **kwargs)
 
 

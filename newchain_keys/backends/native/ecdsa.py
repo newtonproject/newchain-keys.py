@@ -10,7 +10,7 @@ from eth_utils import (
     big_endian_to_int,
 )
 
-from eth_keys.constants import (
+from newchain_keys.constants import (
     SECPK1_N as N,
     SECPK1_G as G,
     SECPK1_Gx as Gx,
@@ -19,11 +19,11 @@ from eth_keys.constants import (
     SECPK1_A as A,
     SECPK1_B as B,
 )
-from eth_keys.exceptions import (
+from newchain_keys.exceptions import (
     BadSignature,
 )
 
-from eth_keys.utils.padding import pad32
+from newchain_keys.utils.padding import pad32
 
 from .jacobian import (
     inv,

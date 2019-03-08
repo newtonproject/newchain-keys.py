@@ -8,8 +8,8 @@ from .ecdsa import (
     private_key_to_public_key,
 )
 
-from eth_keys.backends.base import BaseECCBackend
-from eth_keys.datatypes import (  # noqa: F401
+from newchain_keys.backends.base import BaseECCBackend
+from newchain_keys.datatypes import (  # noqa: F401
     PrivateKey,
     PublicKey,
     Signature,

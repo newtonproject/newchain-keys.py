@@ -1,15 +1,15 @@
-# Ethereum Keys
+# NewChain Keys
 
 
-A common API for Ethereum key operations with pluggable backends.
+A common API for NewChain key operations with pluggable backends.
 
 
-> This library and repository was previously located at https://github.com/pipermerriam/ethereum-keys.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-keys`.  The PyPi package was also renamed from `ethereum-keys` to `eth-keys`.
+> This library and repository is original forked from https://github.com/ethereum/eth-keys.
 
 ## Installation
 
 ```sh
-pip install eth-keys
+pip install newchain-keys
 ```
 
 ## Development
@@ -72,7 +72,7 @@ new version explicitly, like `make release bump="--new-version 2.0.0-alpha.1 dev
 ## QuickStart
 
 ```python
->>> from eth_keys import keys
+>>> from newchain_keys import keys
 >>> pk = keys.PrivateKey(b'\x01' * 32)
 >>> signature = pk.sign_msg(b'a message')
 >>> pk
@@ -94,19 +94,19 @@ True
 
 ### `KeyAPI(backend=None)`
 
-The `KeyAPI` object is the primary API for interacting with the `eth-keys`
+The `KeyAPI` object is the primary API for interacting with the `newchain-keys`
 libary.  The object takes a single optional argument in its constructor which
 designates what backend will be used for eliptical curve cryptography
 operations.  The built-in backends are:
 
-* `eth_keys.backends.NativeECCBackend`: A pure python implementation of the ECC operations.
-* `eth_keys.backends.CoinCurveECCBackend`: Uses the [`coincurve`](https://github.com/ofek/coincurve) library for ECC operations.
+* `newchain_keys.backends.NativeECCBackend`: A pure python implementation of the ECC operations.
+* `newchain_keys.backends.CoinCurveECCBackend`: Uses the [`coincurve`](https://github.com/ofek/coincurve) library for ECC operations.
 
-By default, `eth-keys` will *try* to use the `CoinCurveECCBackend`,
+By default, `newchain-keys` will *try* to use the `CoinCurveECCBackend`,
 falling back to the `NativeECCBackend` if the `coincurve` library is not
 available.
 
-> Note: The `coincurve` library is not automatically installed with `eth-keys` and must be installed separately.
+> Note: The `coincurve` library is not automatically installed with `newchain-keys` and must be installed separately.
 
 The `backend` argument can be given in any of the following forms.
 
@@ -115,8 +115,8 @@ The `backend` argument can be given in any of the following forms.
 * String with the dot-separated import path for the backend class.
 
 ```python
->>> from eth_keys import KeyAPI
->>> from eth_keys.backends import NativeECCBackend
+>>> from newchain_keys import KeyAPI
+>>> from newchain_keys.backends import NativeECCBackend
 # These are all the same
 >>> keys = KeyAPI(NativeECCBackend)
 >>> keys = KeyAPI(NativeECCBackend())
@@ -131,7 +131,7 @@ to the desired backend.
 
 ```python
 >>> import os
->>> os.environ['ECC_BACKEND_CLASS'] = 'eth_keys.backends.CoinCurveECCBackend'
+>>> os.environ['ECC_BACKEND_CLASS'] = 'newchain_keys.backends.CoinCurveECCBackend'
 ```
 
 

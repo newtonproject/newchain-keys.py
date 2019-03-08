@@ -12,8 +12,8 @@ from eth_utils import (
     is_canonical_address,
 )
 
-from eth_keys import KeyAPI
-from eth_keys.backends import NativeECCBackend
+from newchain_keys import KeyAPI
+from newchain_keys.backends import NativeECCBackend
 
 
 MSG = b'message'

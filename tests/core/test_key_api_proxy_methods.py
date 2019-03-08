@@ -4,9 +4,9 @@ from eth_utils import (
     keccak,
 )
 
-from eth_keys import KeyAPI
-from eth_keys.backends import NativeECCBackend
-from eth_keys.exceptions import ValidationError
+from newchain_keys import KeyAPI
+from newchain_keys.backends import NativeECCBackend
+from newchain_keys.exceptions import ValidationError
 
 
 MSG = b'message'

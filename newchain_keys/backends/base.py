@@ -1,6 +1,6 @@
 from typing import Any  # noqa: F401
 
-from eth_keys.datatypes import (
+from newchain_keys.datatypes import (
     PrivateKey,
     PublicKey,
     Signature,

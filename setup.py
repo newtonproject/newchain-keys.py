@@ -7,7 +7,7 @@ from setuptools import (
 
 
 deps = {
-    'eth-keys': [
+    'newchain-keys': [
         "eth-utils>=1.3.0,<2.0.0",
     ],
     'test': [
@@ -29,7 +29,7 @@ deps = {
 
 deps['dev'] = (
     deps['dev'] +
-    deps['eth-keys'] +
+    deps['newchain-keys'] +
     deps['lint'] +
     deps['test']
 )
@@ -40,20 +40,20 @@ setup(
     name='eth-keys',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version='0.2.0-beta.3',
-    description="""Common API for Ethereum key operations.""",
+    description="""Common API for NewChain key operations.""",
     long_description_markdown_filename='README.md',
-    author='Piper Merriam',
-    author_email='pipermerriam@gmail.com',
-    url='https://github.com/ethereum/eth-keys',
+    author='Xia Wu',
+    author_email='xiawu@zeuux.org',
+    url='https://github.com/xiawu/newchain-keys-py',
     include_package_data=True,
     setup_requires=['setuptools-markdown'],
-    install_requires=deps['eth-keys'],
-    py_modules=['eth_keys'],
+    install_requires=deps['newchain-keys'],
+    py_modules=['newchain_keys'],
     extras_require=deps,
     license="MIT",
     zip_safe=False,
-    package_data={'eth-keys': ['py.typed']},
-    keywords='ethereum',
+    package_data={'newchain-keys': ['py.typed']},
+    keywords='newchain',
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
         'Development Status :: 4 - Beta',

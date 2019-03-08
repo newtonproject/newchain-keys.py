@@ -2,12 +2,12 @@ from __future__ import absolute_import
 
 from typing import Optional  # noqa: F401
 
-from eth_keys.datatypes import (  # noqa: F401
+from newchain_keys.datatypes import (  # noqa: F401
     PrivateKey,
     PublicKey,
     Signature,
 )
-from eth_keys.exceptions import (
+from newchain_keys.exceptions import (
     BadSignature,
 )
 

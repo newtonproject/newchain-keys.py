@@ -1,12 +1,12 @@
 import pytest
 
-from eth_keys import KeyAPI
-from eth_keys.backends import NativeECCBackend
+from newchain_keys import KeyAPI
+from newchain_keys.backends import NativeECCBackend
 
 
 @pytest.fixture(autouse=True)
 def native_backend_env_var(monkeypatch):
-    monkeypatch.setenv('ECC_BACKEND_CLASS', 'eth_keys.backends.native.NativeECCBackend')
+    monkeypatch.setenv('ECC_BACKEND_CLASS', 'newchain_keys.backends.native.NativeECCBackend')
 
 
 @pytest.mark.parametrize(
@@ -15,8 +15,8 @@ def native_backend_env_var(monkeypatch):
         None,
         NativeECCBackend(),
         NativeECCBackend,
-        'eth_keys.backends.NativeECCBackend',
-        'eth_keys.backends.native.NativeECCBackend',
+        'newchain_keys.backends.NativeECCBackend',
+        'newchain_keys.backends.native.NativeECCBackend',
     ),
 )
 def test_supported_backend_formats(backend):

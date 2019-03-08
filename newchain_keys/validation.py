@@ -7,10 +7,10 @@ from eth_utils import (
 )
 from eth_utils.toolz import curry
 
-from eth_keys.constants import (
+from newchain_keys.constants import (
     SECPK1_N,
 )
-from eth_keys.exceptions import (
+from newchain_keys.exceptions import (
     ValidationError,
 )
 

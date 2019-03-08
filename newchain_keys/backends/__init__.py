@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import os
 from typing import Type
 
-from eth_keys.utils.module_loading import (
+from newchain_keys.utils.module_loading import (
     import_string,
 )
 
@@ -17,9 +17,9 @@ from .native import NativeECCBackend  # noqa: F401
 
 def get_default_backend_class() -> str:
     if is_coincurve_available():
-        return 'eth_keys.backends.CoinCurveECCBackend'
+        return 'newchain_keys.backends.CoinCurveECCBackend'
     else:
-        return 'eth_keys.backends.NativeECCBackend'
+        return 'newchain_keys.backends.NativeECCBackend'
 
 
 def get_backend_class(import_path: str = None) -> Type[BaseECCBackend]:

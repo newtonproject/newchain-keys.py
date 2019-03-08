@@ -11,13 +11,13 @@ from eth_utils import (
 )
 
 from newchain_keys.constants import (
-    SECPK1_N as N,
-    SECPK1_G as G,
-    SECPK1_Gx as Gx,
-    SECPK1_Gy as Gy,
-    SECPK1_P as P,
-    SECPK1_A as A,
-    SECPK1_B as B,
+    SECPR1_N as N,
+    SECPR1_G as G,
+    SECPR1_Gx as Gx,
+    SECPR1_Gy as Gy,
+    SECPR1_P as P,
+    SECPR1_A as A,
+    SECPR1_B as B,
 )
 from newchain_keys.exceptions import (
     BadSignature,

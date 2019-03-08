@@ -22,11 +22,11 @@ from newchain_keys import KeyAPI
 from newchain_keys.backends import CoinCurveECCBackend
 from newchain_keys.backends import NativeECCBackend
 from newchain_keys.constants import (
-    SECPK1_N,
+    SECPR1_N,
 )
 
 
-private_key_st = st.integers(min_value=1, max_value=SECPK1_N).map(
+private_key_st = st.integers(min_value=1, max_value=SECPR1_N).map(
     int_to_big_endian,
 ).map(pad32)
 

@@ -1,9 +1,9 @@
 from typing import Tuple  # noqa: F401
 
 from newchain_keys.constants import (
-    SECPK1_P as P,
-    SECPK1_N as N,
-    SECPK1_A as A,
+    SECPR1_P as P,
+    SECPR1_N as N,
+    SECPR1_A as A,
 )
 
 

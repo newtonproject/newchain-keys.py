@@ -8,7 +8,7 @@ from eth_utils import (
 from eth_utils.toolz import curry
 
 from newchain_keys.constants import (
-    SECPK1_N,
+    SECPR1_N,
 )
 from newchain_keys.exceptions import (
     ValidationError,
@@ -47,7 +47,7 @@ def validate_lte(value: Any, maximum: int) -> None:
         )
 
 
-validate_lt_secpk1n = validate_lte(maximum=SECPK1_N - 1)
+validate_lt_secpk1n = validate_lte(maximum=SECPR1_N - 1)
 
 
 def validate_message_hash(value: Any) -> None:

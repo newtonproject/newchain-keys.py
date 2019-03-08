@@ -120,9 +120,9 @@ The `backend` argument can be given in any of the following forms.
 # These are all the same
 >>> keys = KeyAPI(NativeECCBackend)
 >>> keys = KeyAPI(NativeECCBackend())
->>> keys = KeyAPI('eth_keys.backends.NativeECCBackend')
+>>> keys = KeyAPI('newchain_keys.backends.NativeECCBackend')
 # Or for the coincurve base backend
->>> keys = KeyAPI('eth_keys.backends.CoinCurveECCBackend')
+>>> keys = KeyAPI('newchain_keys.backends.CoinCurveECCBackend')
 ```
 
 The backend can also be configured using the environment variable

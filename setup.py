@@ -44,7 +44,7 @@ setup(
     long_description_markdown_filename='README.md',
     author='Xia Wu',
     author_email='xiawu@zeuux.org',
-    url='https://github.com/xiawu/newchain-keys-py',
+    url='https://github.com/xiawu/newchain-keys.py',
     include_package_data=True,
     setup_requires=['setuptools-markdown'],
     install_requires=deps['newchain-keys'],

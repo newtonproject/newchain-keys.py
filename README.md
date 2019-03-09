@@ -78,11 +78,11 @@ new version explicitly, like `make release bump="--new-version 2.0.0-alpha.1 dev
 >>> pk
 '0x0101010101010101010101010101010101010101010101010101010101010101'
 >>> pk.public_key
-'0x1b84c5567b126440995d3ed5aaba0565d71e1834604819ff9c17f5e9d5dd078f70beaf8f588b541507fed6a642c5ab42dfdf8120a7f639de5122d47a69a8e8d1'
+'0x6ff03b949241ce1dadd43519e6960e0a85b41a69a05c328103aa2bce1594ca163c4f753a55bf01dc53f6c0b0c7eee78b40c6ff7d25a96e2282b989cef71c144a'
 >>> signature
-'0xccda990dba7864b79dc49158fea269338a1cf5747bc4c4bf1b96823e31a0997e7d1e65c06c5bf128b7109e1b4b9ba8d1305dc33f32f624695b2fa8e02c12c1e000'
+'0xf5a024b434c72877e7cd4c1f086896477babb10153ef2a787c9276763e6dad1d17d5dcc2a5a611d77e22b06832d84ba6560b0ae36013710156715ea92244fd8901'
 >>> pk.public_key.to_checksum_address()
-'0x1a642f0E3c3aF545E7AcBD38b07251B3990914F1'
+'0xa0E0162b1a12Ed06d63DD1BF0CD5b0d1e6614B3c'
 >>> signature.verify_msg(b'a message', pk.public_key)
 True
 >>> signature.recover_public_key_from_msg(b'a message') == pk.public_key
@@ -100,13 +100,8 @@ designates what backend will be used for eliptical curve cryptography
 operations.  The built-in backends are:
 
 * `newchain_keys.backends.NativeECCBackend`: A pure python implementation of the ECC operations.
-* `newchain_keys.backends.CoinCurveECCBackend`: Uses the [`coincurve`](https://github.com/ofek/coincurve) library for ECC operations.
 
-By default, `newchain-keys` will *try* to use the `CoinCurveECCBackend`,
-falling back to the `NativeECCBackend` if the `coincurve` library is not
-available.
-
-> Note: The `coincurve` library is not automatically installed with `newchain-keys` and must be installed separately.
+By default, `newchain-keys` will *try* to use the `NativeECCBackend`.
 
 The `backend` argument can be given in any of the following forms.
 
@@ -121,19 +116,11 @@ The `backend` argument can be given in any of the following forms.
 >>> keys = KeyAPI(NativeECCBackend)
 >>> keys = KeyAPI(NativeECCBackend())
 >>> keys = KeyAPI('newchain_keys.backends.NativeECCBackend')
-# Or for the coincurve base backend
->>> keys = KeyAPI('newchain_keys.backends.CoinCurveECCBackend')
 ```
 
 The backend can also be configured using the environment variable
 `ECC_BACKEND_CLASS` which should be set to the dot-separated python import path
 to the desired backend.
-
-```python
->>> import os
->>> os.environ['ECC_BACKEND_CLASS'] = 'newchain_keys.backends.CoinCurveECCBackend'
-```
-
 
 ### `KeyAPI.ecdsa_sign(message_hash, private_key) -> Signature`
 

@@ -15,12 +15,15 @@ from .base import BaseECCBackend
 
 
 def is_coincurve_available() -> bool:
-    try:
-        import coincurve  # noqa: F401
-    except ImportError:
-        return False
-    else:
-        return True
+    # disabled the coincurve
+    # TODO:need to add high performance backends
+    return False
+    #try:
+    #    import coincurve  # noqa: F401
+    #except ImportError:
+    #    return False
+    #else:
+    #    return True
 
 
 class CoinCurveECCBackend(BaseECCBackend):

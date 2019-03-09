@@ -28,7 +28,7 @@ def key_api():
 PK_BYTES = decode_hex(
     '0x58d23b55bc9cdce1f18c2500f40ff4ab7245df9a89505e9b1fa4851f623d241d'
 )
-ADDRESS = '0xdc544d1aa88ff8bbd2f2aec754b1f1e99e1812fd'
+ADDRESS = '0x6c0e609d123a372f7132ba498f1e717fa9c3dc6f'
 
 
 @pytest.fixture

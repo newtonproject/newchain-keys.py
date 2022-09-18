@@ -38,13 +38,11 @@ deps['dev'] = (
     deps['test']
 )
 
-with open('./README.md') as readme:
-    long_description = readme.read()
 
 setup(
     name='newchain-keys',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='0.1.0',
+    version='0.2.0',
     description="""Common API for NewChain key operations.""",
     long_description_markdown_filename='README.md',
     author='Xia Wu',

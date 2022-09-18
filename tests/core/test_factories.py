@@ -1,5 +1,5 @@
-from eth_keys import keys
-from eth_keys.tools.factories import (
+from newchain_keys import keys
+from newchain_keys.tools.factories import (
     PrivateKeyFactory,
     PublicKeyFactory,
 )

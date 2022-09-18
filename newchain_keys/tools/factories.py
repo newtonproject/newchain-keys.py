@@ -2,11 +2,11 @@ try:
     import factory
 except ImportError as err:
     raise ImportError(
-        "Use of `eth_keys.tools.factories` requires the `factory-boy` package "
+        "Use of `newchain_keys.tools.factories` requires the `factory-boy` package "
         "which does not appear to be installed."
     ) from err
 
-from eth_keys import keys
+from newchain_keys import keys
 
 
 def _mk_random_bytes(num_bytes: int) -> bytes:

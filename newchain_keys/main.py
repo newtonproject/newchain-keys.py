@@ -59,13 +59,13 @@ class KeyAPI(LazyBackend):
         validate_message_hash(message_hash)
         if not isinstance(private_key, PrivateKey):
             raise ValidationError(
-                "The `private_key` must be an instance of `eth_keys.datatypes.PrivateKey`"
+                "The `private_key` must be an instance of `newchain_keys.datatypes.PrivateKey`"
             )
         signature = self.backend.ecdsa_sign_non_recoverable(message_hash, private_key)
         if not isinstance(signature, NonRecoverableSignature):
             raise ValidationError(
                 "Backend returned an invalid signature.  Return value must be "
-                "an instance of `eth_keys.datatypes.Signature`"
+                "an instance of `newchain_keys.datatypes.Signature`"
             )
         return signature
 
@@ -80,7 +80,7 @@ class KeyAPI(LazyBackend):
             )
         if not isinstance(signature, BaseSignature):
             raise ValidationError(
-                "The `signature` must be an instance of `eth_keys.datatypes.BaseSignature`"
+                "The `signature` must be an instance of `newchain_keys.datatypes.BaseSignature`"
             )
         return self.backend.ecdsa_verify(message_hash, signature, public_key)
 

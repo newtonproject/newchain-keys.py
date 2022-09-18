@@ -1,5 +1,5 @@
-from eth_keys.constants import (
-    SECPK1_N,
+from newchain_keys.constants import (
+    SECPR1_N,
 )
 
 
@@ -13,4 +13,4 @@ def coerce_low_s(value: int) -> int:
     See https://bitcoin.stackexchange.com/questions/83408/in-ecdsa-why-is-r-%E2%88%92s-mod-n-complementary-to-r-s  # noqa: E501
     or https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2.md.
     """
-    return min(value, -value % SECPK1_N)
+    return min(value, -value % SECPR1_N)

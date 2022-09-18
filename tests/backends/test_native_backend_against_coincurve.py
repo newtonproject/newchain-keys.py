@@ -10,13 +10,13 @@ from eth_utils import (
     keccak,
 )
 
-from eth_keys.exceptions import (
+from newchain_keys.exceptions import (
     BadSignature,
 )
 
-from eth_keys import KeyAPI
-from eth_keys.backends import CoinCurveECCBackend
-from eth_keys.backends import NativeECCBackend
+from newchain_keys import KeyAPI
+from newchain_keys.backends import CoinCurveECCBackend
+from newchain_keys.backends import NativeECCBackend
 
 from strategies import (
     private_key_st,

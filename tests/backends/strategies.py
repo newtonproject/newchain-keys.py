@@ -6,15 +6,15 @@ from eth_utils import (
     int_to_big_endian,
 )
 
-from eth_keys.constants import (
-    SECPK1_N,
+from newchain_keys.constants import (
+    SECPR1_N,
 )
-from eth_keys.utils.padding import (
+from newchain_keys.utils.padding import (
     pad32,
 )
 
 
-private_key_st = st.integers(min_value=1, max_value=SECPK1_N).map(
+private_key_st = st.integers(min_value=1, max_value=SECPR1_N).map(
     int_to_big_endian,
 ).map(pad32)
 

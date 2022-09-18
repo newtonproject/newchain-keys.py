@@ -17,7 +17,7 @@ from pyasn1.type import (
     namedtype,
 )
 
-from eth_keys.utils.der import (
+from newchain_keys.utils.der import (
     two_int_sequence_decoder,
     two_int_sequence_encoder,
 )

@@ -29,6 +29,7 @@ from .jacobian import (
     inv,
     fast_multiply,
     fast_add,
+    is_identity,
     jacobian_add,
     jacobian_multiply,
     from_jacobian,
@@ -58,6 +59,35 @@ def private_key_to_public_key(private_key_bytes: bytes) -> bytes:
     raw_public_key = fast_multiply(G, private_key_as_num)
     public_key_bytes = encode_raw_public_key(raw_public_key)
     return public_key_bytes
+
+
+def compress_public_key(uncompressed_public_key_bytes: bytes) -> bytes:
+    x, y = decode_public_key(uncompressed_public_key_bytes)
+    if y % 2 == 0:
+        prefix = b"\x02"
+    else:
+        prefix = b"\x03"
+    return prefix + pad32(int_to_big_endian(x))
+
+
+def decompress_public_key(compressed_public_key_bytes: bytes) -> bytes:
+    if len(compressed_public_key_bytes) != 33:
+        raise ValueError("Invalid compressed public key")
+
+    prefix = compressed_public_key_bytes[0]
+    if prefix not in (2, 3):
+        raise ValueError("Invalid compressed public key")
+
+    x = big_endian_to_int(compressed_public_key_bytes[1:])
+    y_squared = (x**3 + A * x + B) % P
+    y_abs = pow(y_squared, ((P + 1) // 4), P)
+
+    if (prefix == 2 and y_abs & 1 == 1) or (prefix == 3 and y_abs & 1 == 0):
+        y = (-y_abs) % P
+    else:
+        y = y_abs
+
+    return encode_raw_public_key((x, y))
 
 
 def deterministic_generate_k(msg_hash: bytes,
@@ -91,14 +121,11 @@ def ecdsa_raw_sign(msg_hash: bytes,
 
 
 def ecdsa_raw_verify(msg_hash: bytes,
-                     vrs: Tuple[int, int, int],
+                     rs: Tuple[int, int],
                      public_key_bytes: bytes) -> bool:
     raw_public_key = decode_public_key(public_key_bytes)
 
-    v, r, s = vrs
-    v += 27
-    if not (27 <= v <= 34):
-        raise BadSignature("Invalid Signature")
+    r, s = rs
 
     w = inv(s, N)
     z = big_endian_to_int(msg_hash)
@@ -133,6 +160,10 @@ def ecdsa_raw_recover(msg_hash: bytes,
     XY = jacobian_multiply((x, y, 1), s)
     Qr = jacobian_add(Gz, XY)
     Q = jacobian_multiply(Qr, inv(r, N))
+
+    if is_identity(Q):
+        raise BadSignature("InvalidSignature")
+
     raw_public_key = from_jacobian(Q)
 
     return encode_raw_public_key(raw_public_key)

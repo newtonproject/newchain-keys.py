@@ -2,11 +2,11 @@ import pytest
 
 from eth_utils import (
     keccak,
+    ValidationError,
 )
 
 from newchain_keys import KeyAPI
 from newchain_keys.backends import NativeECCBackend
-from newchain_keys.exceptions import ValidationError
 
 
 MSG = b'message'
@@ -46,6 +46,16 @@ def test_key_api_ecdsa_sign_validation(key_api, private_key):
         key_api.ecdsa_sign(MSG, private_key)
 
     signature = key_api.ecdsa_sign(MSGHASH, private_key)
+    assert signature.verify_msg_hash(MSGHASH, private_key.public_key)
+
+
+def test_key_api_ecdsa_sign_non_recoverable_validation(key_api, private_key):
+    with pytest.raises(ValidationError):
+        key_api.ecdsa_sign_non_recoverable(MSGHASH, private_key.to_bytes())
+    with pytest.raises(ValidationError):
+        key_api.ecdsa_sign_non_recoverable(MSG, private_key)
+
+    signature = key_api.ecdsa_sign_non_recoverable(MSGHASH, private_key)
     assert signature.verify_msg_hash(MSGHASH, private_key.public_key)
 
 

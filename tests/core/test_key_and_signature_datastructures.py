@@ -10,10 +10,12 @@ from eth_utils import (
     is_normalized_address,
     is_checksum_address,
     is_canonical_address,
+    ValidationError,
 )
 
 from newchain_keys import KeyAPI
 from newchain_keys.backends import NativeECCBackend
+from newchain_keys.exceptions import ValidationError as EthKeysValidationErrorCopy
 
 
 MSG = b'message'
@@ -42,8 +44,20 @@ def test_signing_from_private_key_obj(key_api, private_key):
     assert key_api.ecdsa_verify(MSGHASH, signature, private_key.public_key)
 
 
+def test_signing_non_recoverable_from_private_key_obj(key_api, private_key):
+    signature = private_key.sign_msg_non_recoverable(MSG)
+
+    assert key_api.ecdsa_verify(MSGHASH, signature, private_key.public_key)
+
+
 def test_hash_signing_from_private_key_obj(key_api, private_key):
     signature = private_key.sign_msg_hash(MSGHASH)
+
+    assert key_api.ecdsa_verify(MSGHASH, signature, private_key.public_key)
+
+
+def test_hash_signing_non_recoverable_from_private_key_obj(key_api, private_key):
+    signature = private_key.sign_msg_hash_non_recoverable(MSGHASH)
 
     assert key_api.ecdsa_verify(MSGHASH, signature, private_key.public_key)
 
@@ -57,11 +71,14 @@ def test_recover_from_public_key_class(key_api, private_key):
 
 
 def test_verify_from_public_key_obj(key_api, private_key):
-    signature = key_api.ecdsa_sign(MSGHASH, private_key)
+    non_recoverable_signature = key_api.ecdsa_sign_non_recoverable(MSGHASH, private_key)
+    recoverable_signature = key_api.ecdsa_sign_non_recoverable(MSGHASH, private_key)
+
     public_key = private_key.public_key
 
-    assert public_key.verify_msg_hash(MSGHASH, signature)
-    assert public_key.verify_msg(MSG, signature)
+    for signature in (recoverable_signature, non_recoverable_signature):
+        assert public_key.verify_msg_hash(MSGHASH, signature)
+        assert public_key.verify_msg(MSG, signature)
 
 
 def test_from_private_for_public_key_class(key_api, private_key):
@@ -72,6 +89,13 @@ def test_from_private_for_public_key_class(key_api, private_key):
 
 def test_verify_from_signature_obj(key_api, private_key):
     signature = key_api.ecdsa_sign(MSGHASH, private_key)
+
+    assert signature.verify_msg_hash(MSGHASH, private_key.public_key)
+    assert signature.verify_msg(MSG, private_key.public_key)
+
+
+def test_verify_from_non_recoverable_signature_obj(key_api, private_key):
+    signature = key_api.ecdsa_sign(MSGHASH, private_key).to_non_recoverable_signature()
 
     assert signature.verify_msg_hash(MSGHASH, private_key.public_key)
     assert signature.verify_msg(MSG, private_key.public_key)
@@ -123,3 +147,26 @@ def test_bytes_conversion(key_api, private_key):
     assert public_key.to_bytes() == public_key._raw_key
     assert private_key.to_bytes() == private_key._raw_key
     assert signature.to_bytes() == key_api.Signature(signature.to_bytes()).to_bytes()
+
+
+def test_compressed_bytes_conversion(key_api, private_key):
+    public_key = private_key.public_key
+    compressed_bytes = public_key.to_compressed_bytes()
+    assert len(compressed_bytes) == 33
+    assert key_api.PublicKey.from_compressed_bytes(compressed_bytes) == public_key
+
+
+@pytest.mark.parametrize('validation_error', (ValidationError, EthKeysValidationErrorCopy))
+def test_compressed_bytes_validation(key_api, private_key, validation_error):
+    valid_key = private_key.public_key.to_compressed_bytes()
+
+    with pytest.raises(validation_error):
+        key_api.PublicKey.from_compressed_bytes(valid_key + b"\x00")
+    with pytest.raises(validation_error):
+        key_api.PublicKey.from_compressed_bytes(valid_key[:-1])
+    with pytest.raises(validation_error):
+        key_api.PublicKey.from_compressed_bytes(b"\x04" + valid_key[1:])
+
+
+def test_validation_error_is_from_eth_utils():
+    assert EthKeysValidationErrorCopy is ValidationError

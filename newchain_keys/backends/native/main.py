@@ -5,11 +5,16 @@ from typing import Optional  # noqa: F401
 from .ecdsa import (
     ecdsa_raw_recover,
     ecdsa_raw_sign,
+    ecdsa_raw_verify,
     private_key_to_public_key,
+    compress_public_key,
+    decompress_public_key,
 )
 
 from newchain_keys.backends.base import BaseECCBackend
 from newchain_keys.datatypes import (  # noqa: F401
+    BaseSignature,
+    NonRecoverableSignature,
     PrivateKey,
     PublicKey,
     Signature,
@@ -24,6 +29,19 @@ class NativeECCBackend(BaseECCBackend):
         signature = Signature(vrs=signature_vrs, backend=self)
         return signature
 
+    def ecdsa_sign_non_recoverable(self,
+                                   msg_hash: bytes,
+                                   private_key: PrivateKey) -> NonRecoverableSignature:
+        _, signature_r, signature_s = ecdsa_raw_sign(msg_hash, private_key.to_bytes())
+        signature = NonRecoverableSignature(rs=(signature_r, signature_s), backend=self)
+        return signature
+
+    def ecdsa_verify(self,
+                     msg_hash: bytes,
+                     signature: BaseSignature,
+                     public_key: PublicKey) -> bool:
+        return ecdsa_raw_verify(msg_hash, signature.rs, public_key.to_bytes())
+
     def ecdsa_recover(self,
                       msg_hash: bytes,
                       signature: Signature) -> PublicKey:
@@ -35,3 +53,11 @@ class NativeECCBackend(BaseECCBackend):
         public_key_bytes = private_key_to_public_key(private_key.to_bytes())
         public_key = PublicKey(public_key_bytes, backend=self)
         return public_key
+
+    def decompress_public_key_bytes(self,
+                                    compressed_public_key_bytes: bytes) -> bytes:
+        return decompress_public_key(compressed_public_key_bytes)
+
+    def compress_public_key_bytes(self,
+                                  uncompressed_public_key_bytes: bytes) -> bytes:
+        return compress_public_key(uncompressed_public_key_bytes)
